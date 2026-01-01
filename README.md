@@ -17,19 +17,6 @@ and generates a final report indicating reward validity for each referral.
 
 ---
 
-## Project Structure
-├── src/
-│ └── referral_pipeline.py
-├── output/
-│ └── referral_reward_validation.csv
-├── profiling/
-│ └── profiling_report.xlsx
-├── data_dictionary.xlsx
-├── requirements.txt
-├── Dockerfile
-└── README.md
-
----
 
 ## Data Sources
 The pipeline uses the following input tables:
@@ -62,20 +49,17 @@ All other cases are marked as invalid.
 ---
 
 ## How to Run (Without Docker)
-```bash
+
 pip install -r requirements.txt
 python src/referral_pipeline.py
 
 ---
 ## **requirements.txt**
-
 pandas
 openpyxl
 python-dateutil
 pytz
----
-git add README.md Dockerfile requirements.txt
-git commit -m "Add README, Dockerfile and requirements"
-git push
----
+
+
+
 
