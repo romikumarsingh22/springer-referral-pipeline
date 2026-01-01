@@ -1,9 +1,6 @@
 import pandas as pd
 from pathlib import Path
 
-# =====================================================
-# PATH SETUP
-# =====================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR
 PROFILING_DIR = BASE_DIR / "profiling"
@@ -12,9 +9,6 @@ OUTPUT_DIR = BASE_DIR / "output"
 PROFILING_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-# =====================================================
-# LOAD DATA
-# =====================================================
 def load_csv(name):
     print(f"Loading {name}")
     return pd.read_csv(DATA_DIR / name)
@@ -29,9 +23,6 @@ lead_logs = load_csv("lead_log.csv")
 
 print("✅ All CSV files loaded\n")
 
-# =====================================================
-# STEP 1: DATA PROFILING
-# =====================================================
 profiling = []
 
 def profile(df, table):
@@ -57,9 +48,6 @@ pd.DataFrame(profiling).to_excel(
 )
 print("📊 Profiling report generated")
 
-# =====================================================
-# STEP 2: DATA CLEANING
-# =====================================================
 def to_datetime(df, cols):
     for c in cols:
         if c in df.columns:
@@ -94,9 +82,6 @@ initcap(lead_logs)
 
 print("🧹 Data cleaning done")
 
-# =====================================================
-# STEP 3: JOINS
-# =====================================================
 df = user_referrals.merge(
     user_referral_statuses,
     left_on="user_referral_status_id",
@@ -142,9 +127,6 @@ df = df.merge(
 df.drop_duplicates(subset=["referral_id"], inplace=True)
 print("🔗 All joins completed")
 
-# =====================================================
-# STEP 4: DATA TYPE FIXES
-# =====================================================
 df["reward_value"] = (
     df["reward_value"]
     .astype(str)
@@ -157,9 +139,6 @@ df["transaction_type"] = df["transaction_type"].astype(str).str.upper()
 
 print("🔢 Data type fixes done")
 
-# =====================================================
-# STEP 5: TIMEZONE NORMALIZATION
-# =====================================================
 def tz_naive(s):
     if s is not None and hasattr(s.dtype, "tz"):
         return s.dt.tz_convert(None)
@@ -171,9 +150,6 @@ for c in ["transaction_at", "referral_at", "referrer_membership_expired_date"]:
 
 print("⏱️ Timezone normalization done")
 
-# =====================================================
-# STEP 6: REFERRAL SOURCE CATEGORY
-# =====================================================
 def source_category(row):
     if row["referral_source"] == "User Sign Up":
         return "Online"
@@ -185,9 +161,6 @@ def source_category(row):
 
 df["referral_source_category"] = df.apply(source_category, axis=1)
 
-# =====================================================
-# STEP 7: BUSINESS LOGIC
-# =====================================================
 df["is_business_logic_valid"] = False
 
 valid_success = (
@@ -211,36 +184,27 @@ valid_no_reward = (
 df.loc[valid_success | valid_no_reward, "is_business_logic_valid"] = True
 print("✅ Business logic applied")
 
-# =====================================================
-# STEP 8: FINAL OUTPUT
-# =====================================================
 final_columns = [
     "referral_id",
     "referral_source",
     "referral_source_category",
     "referral_at",
-
     "referrer_user_id",
     "referrer_name",
     "referrer_phone_number",
     "referrer_homeclub",
-
     "referee_id",
     "referee_name",
     "referee_phone",
-
     "description",
     "reward_value",
-
     "transaction_id",
     "transaction_status",
     "transaction_at",
     "transaction_location",
     "transaction_type",
-
     "updated_at",
     "created_at",
-
     "is_business_logic_valid"
 ]
 
