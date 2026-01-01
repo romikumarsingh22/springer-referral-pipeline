@@ -59,6 +59,14 @@ python src/referral_pipeline.py
 - openpyxl
 - python-dateutil
 - pytz
+---
+## Docker Setup
+
+This project is containerized using Docker for easy and consistent execution.
+
+### Build Docker Image
+```bash
+docker build -t springer-referral-pipeline .
 
 
 
