@@ -65,13 +65,15 @@ All other cases are marked as invalid.
 ```bash
 pip install -r requirements.txt
 python src/referral_pipeline.py
-## requirements
+
+---
 pandas
 openpyxl
 python-dateutil
 pytz
-
+---
 git add README.md Dockerfile requirements.txt
 git commit -m "Add README, Dockerfile and requirements"
 git push
+---
 
