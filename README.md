@@ -67,6 +67,8 @@ pip install -r requirements.txt
 python src/referral_pipeline.py
 
 ---
+## **requirements.txt**
+
 pandas
 openpyxl
 python-dateutil
