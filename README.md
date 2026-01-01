@@ -64,9 +64,6 @@ python src/referral_pipeline.py
 
 This project is containerized using Docker for easy and consistent execution.
 
-### Build Docker Image
-```bash
-docker build -t springer-referral-pipeline .
 
 
 
