@@ -55,10 +55,10 @@ python src/referral_pipeline.py
 
 ---
 ## **requirements.txt**
-pandas
-openpyxl
-python-dateutil
-pytz
+- pandas
+- openpyxl
+- python-dateutil
+- pytz
 
 
 
